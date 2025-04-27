@@ -9,52 +9,63 @@ FoamFile
 {
     version     2.0;
     format      ascii;
-    class       dictionary;
-    object      controlDict;
+    class       volScalarField;
+    object      k;
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-application     chtMultiRegionFoam;
+dimensions      [0 2 -2 0 0 0 0];
 
-startFrom       latestTime;
+internalField   uniform 0.1;
 
-startTime       0.0001;
+boundaryField
+{
+    grounds
+    {
+        type		kqRWallFunction;
+        value		$internalField;
+    }
 
-stopAt          endTime;
+    bottom
+    {
+        type		kqRWallFunction;
+        value		$internalField;
+    }
 
-endTime         100;
+    front
+    {
+        type		empty;
+    }
 
-deltaT          0.0001;
+    back
+    {
+        type		empty;
+    }
 
-writeControl    adjustable;
+    inlet
+    {
+        type		fixedValue;
+        value		$internalField;
+    }
 
-writeInterval   0.1;
+    outlet
+    {
+        type		fixedValue;
+        value		$internalField;
+    }
 
-purgeWrite      0;
+    fluid_to_solid
+    {
+        type            kqRWallFunction;
+        value           $internalField;
+    }
 
-writeFormat     ascii;
-
-writePrecision  8;
-
-writeCompression off;
-
-timeFormat      general;
-
-timePrecision   6;
-
-runTimeModifiable yes;
-
-maxCo           0.6;
-
-// Maximum diffusion number
-maxDi           10.0;
-
-adjustTimeStep  yes;
-
-//functions
-//{
-    //#include "vtkWrite"
-//}
+    solid_to_fluid
+    {
+        type            kqRWallFunction;
+        value           $internalField;
+    }
+}
 
 
 // ************************************************************************* //
