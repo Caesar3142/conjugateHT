@@ -14,36 +14,8 @@ FoamFile
 }
 // * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
 
-numberOfSubdomains  4;
+numberOfSubdomains  8;
 
 method              scotch;
-
-regions
-{
-    heater
-    {
-        numberOfSubdomains  1;
-        method      simple; // none;
-
-        coeffs
-        {
-            n       (1 1 1);
-        }
-    }
-}
-
-
-/*
-constraints
-{
-    //- Keep owner and neighbour on same processor for faces in zones:
-    faces
-    {
-        type    preserveFaceZones;
-        zones   (heater solid1 solid3);
-    }
-}
-*/
-
 
 // ************************************************************************* //
